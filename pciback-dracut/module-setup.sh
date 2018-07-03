@@ -12,7 +12,7 @@ depends() {
 
 # called by dracut
 installkernel() {
-    instmods xen-pciback
+    instmods vfio-pci
 }
 
 # called by dracut

@@ -11,10 +11,10 @@ force_pciback() {
           if [ -e "/sys/bus/pci/devices/${pcidev}/driver" ] ; then
             curdrv=$(readlink "/sys/bus/pci/devices/${pcidev}/driver")
             curdrv="${curdrv##*/}"
-            if [ "${curdrv}" != "pciback" ] ; then
+            if [ "${curdrv}" != "vfio-pci" ] ; then
               echo "${pcidev}" > "/sys/bus/pci/devices/${pcidev}/driver/unbind"
-              echo "${pcidev}" > "/sys/bus/pci/drivers/pciback/new_slot"
-              echo "${pcidev}" > "/sys/bus/pci/drivers/pciback/bind"
+              echo "${pcidev}" > "/sys/bus/pci/drivers/vfio-pci/new_slot"
+              echo "${pcidev}" > "/sys/bus/pci/drivers/vfio-pci/bind"
             fi
           fi
         done
@@ -23,5 +23,5 @@ force_pciback() {
   done
 }
 
-modprobe xen-pciback
+modprobe vfio-pci
 force_pciback /proc/cmdline
